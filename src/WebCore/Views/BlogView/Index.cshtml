@@ -1,0 +1,92 @@
+@using WebCore.Models.ManageBlog;
+@model IEnumerable<Blog>
+
+@inject WebCore.Services.Spec.IBlogService Srv
+
+
+@{
+    ViewData["Title"] = "Index-ALTERADO";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index Blog View >>> @ViewData["Title"]</h2>
+
+@ViewBag.WebTexto
+<br />
+@ViewData["MensagemWeb"]
+<br /><br />
+
+@{ 
+    var teste = false;
+    <p>Estou criando uma view @teste</p>
+}
+
+<br />
+<span>Quantidade: @Model.Count()</span>
+<br />
+<span>Quantidade SRV: @Srv.Listar().Count()</span>
+
+<p>
+    @Html.ActionLink("Link Novo", "Create")
+    <a asp-action="Create">Create New</a>
+</p>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Autor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Resumo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tilulo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Url)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Srv.Listar())
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Autor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Resumo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tilulo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Url)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<br />
+<br />
+
+@Html.Partial("_Assinatura")
+
+@{
+    var retorno = @Html.Partial("_Assinatura");
+    string div = "<div style='background-color: Red'>{0}</div>";
+}
+
+@{
+    Html.RenderPartial("_Assinatura");
+}
